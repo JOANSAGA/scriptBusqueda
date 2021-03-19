@@ -1,0 +1,38 @@
+llenar los numeros a buscar en el archivo de busqueda, solo uno por linea y solo los numeros a buscar:
+
+985051042
+985051042
+985051042
+985051042
+985051042
+
+editar la ruta en la que se desea buscar 
+
+# 247-1 
+# path = r"E:\GRABACIONES\grabaciones247 julio-diciembre2019"
+
+para habilitar la ruta solo se debe borrar el # quedando de la sig forma
+
+path = r"E:\GRABACIONES\grabaciones247 julio-diciembre2019"
+
+evitar los espacios tanto al momento de editar el script o en el archibo de busqueda
+
+evitar lineas vacias en el archivo de busqueda
+
+la vs1 realiza una busqeuda en todas las carpetas del direcctorio que se le asignan y realiza una busqueda solo por numero
+
+la vs2 realiza una busqueda por numero y fecha, sino encuentra resultados solo con la busqueda por numero realizara la busqueda por fecha, horas y minutos sacando todos los resultados de ese minuto
+
+el formato para el archivo de busqueda de la vs2 debe ser:
+
+985051042	20200114	1529
+985051042	20200114	1529
+
+donde: 
+el primer valor sera el numero
+segundo valor sera YYYYMMDD
+tercer valor sera HHMM
+
+separar los valores por espacios o tabulacioes
+
+para cancelar el proceso de busqueda debe precionar las teclas "ctrl + c" estando en la consola
