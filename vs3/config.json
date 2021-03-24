@@ -1,8 +1,15 @@
 {
-    "directorios": [
+    "directorios": [{
+            "nombre": "DINOMI CLOUD",
+            "ruta": "\\\\nas.sng.com\\Public\\Grabaciones\\DINOMI CLOUD"
+        },
         {
-            "nombre": "contenedor",
-            "ruta": "C:\\Users\\SINERGIA\\Desktop\\script\\vs3"
+            "nombre": "SERVIDOR 247",
+            "ruta": "\\\\nas.sng.com\\Public\\Grabaciones\\SERVIDOR 247"
+        },
+        {
+            "nombre": "SERVIDOR 250",
+            "ruta": "\\\\nas.sng.com\\Public\\Grabaciones\\SERVIDOR 250"
         }
     ]
 }

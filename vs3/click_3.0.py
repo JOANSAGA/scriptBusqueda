@@ -95,7 +95,7 @@ def seleccionarDirectorios(config):
                         print("* Opcion no valida escoja [s = si / n = no]")
             else:
                 print("* Opcion no valida, agrege un numero de directorio")
-            
+
     return dirOpcion
 
 def validarDirectorio(directorio):
@@ -152,6 +152,7 @@ def addModDirectorio(config):
                     print("* Opcion",cont,":")
                     print("* Nombre: ", ruta['nombre'])
                     print("* Ruta:   ", ruta['ruta'])
+                
                     linea()
                     cont = cont + 1
                     direc = True            
@@ -175,16 +176,150 @@ def addModDirectorio(config):
             os.system("cls")
 
 def BuscaNum(dirBusqueda, config, busqueda):
-    print(dirBusqueda)
-    print(config)
-    print(busqueda)
     cont = 1
+    dirOpcion = []
+    archivobusqueda = busqueda
+
+    os.system("cls")
+
     with open(config, 'r') as file:
         data = json.load(file)
 
+    for ruta in data['directorios']:
+        if cont in dirBusqueda:
+            dirOpcion.append(ruta['ruta'])
+        cont = cont + 1
+    cont = 0
+    for rutas in dirOpcion:
+        with open(archivobusqueda, 'r') as busqueda:
+            for numero in busqueda:
+                numero = str(numero).rstrip()
+                
+                linea()
+                print("* Analizando numero: ", numero)
+                print("* Analizando directorio: ", rutas)
+                with os.scandir(rutas) as years:
+                    for year in years:
+                        if year.is_dir():
+                            with os.scandir(year) as meses:
+                                for mes in meses:
+                                    if mes.is_dir():
+                                        with os.scandir(mes) as dias:
+                                            for dia in dias:
+                                                if dia.is_dir():
+                                                    os.system("cls")
+                                                    linea()
+                                                    print("* Ruta: ", rutas)
+                                                    print("* Numero: ", numero)
+                                                    print("* Año: ", year)
+                                                    print("* Mes: ", mes)
+                                                    print("* Dia: ", dia)
+                                                    print("* Archivos encontrados: ", cont)
+                                                    linea()
+                                                    with os.scandir(dia) as ficheros:
+                                                        for fichero in ficheros:
+                                                            if fichero.is_file():
+                                                                if numero in fichero.name:
+                                                                    print("archivo encontrado: " + fichero.name)
+                                                                    newDir = contenedor + "\\" + numero
+                                                                    try:
+                                                                        os.stat(newDir)
+                                                                        print(
+                                                                            "Directorio existe: " + newDir)
+                                                                    except:
+                                                                        os.mkdir(newDir)
+                                                                        print(
+                                                                            "Directorio creado: " + newDir)
+                                                                    cont = cont + 1
+                                                                    shutil.copy(fichero.path, newDir)
+
+def BuscaNumFecha(dirBusqueda, config, busqueda):
+    cont = 1
+    dirOpcion = []
+    archivobusqueda = busqueda
+
+    os.system("cls")
+
+    with open(config, 'r') as file:
+        data = json.load(file)
+
+    for ruta in data['directorios']:
+        if cont in dirBusqueda:
+            dirOpcion.append(ruta['ruta'])
+        cont = cont + 1
+    
+    with archivo as lineas:
+            for parametros in lineas:
+                parametros = parametros.split()
+                numero = parametros[0]
+                fecha = parametros[1]
+                fechaSeparda = [fecha[i:i+4] for i in range(0, len(fecha), 4)]
+                year = fechaSeparda[0]
+                fechaSeparda = fechaSeparda[1]
+                mesDia = [fechaSeparda[i:i+2] for i in range(0, len(fechaSeparda), 2)]
+                mes = mesDia[0]
+                dia = mesDia[1]
+                hora = parametros[2]
+                fechaUnida = str(fecha) + "-" + str(hora)
+                #print("numero: " + str(numero))
+                #print("fecha: " + str(fechaUnida))
+                #print("año: " + str(year) + " mes: " + str(mes) + " dia: " + str(dia))
+                #print("hora: " + str(hora))
+        
+                directorio = str(dir1) + '\\' + str(mes) + '\\' + str(dia)
+                print("*********************** ANALIZANDO MES: " + mes + " DIA: " + dia)
+                print("*********************** ANALIZANDO RUTA: ")
+                print("*********************** " + str(directorio))
+                print("*********************** BUSCANDO POR NUMERO: " + numero)
+                cont = 0
+                with os.scandir(directorio) as ficheros:
+                    for fichero in ficheros:
+                        #print(numero + "//////" + fichero.name)
+                        if fichero.is_file():
+                            if numero in fichero.name:
+                                cont = cont + 1
+                                newDir = str(dir2) + "\\" + numero
+                                try:
+                                    os.stat(newDir)
+                                    if cont <= 1:
+                                        print(
+                                            "*********************** DIRECCTORIO EXISTE: " + newDir)
+                                except:
+                                    os.mkdir(newDir)
+                                    if cont <= 1:
+                                        print(
+                                            "*********************** DIRECCTORIO CREADO: " + newDir)
+                                shutil.copy(fichero.path, newDir)
+                print("*********************** ARCHIVOS ENCONTRADOS: " + str(cont))
+                print("*********************** BUSCANDO POR FECHA: " + fechaUnida)
+                with os.scandir(directorio) as ficheros:
+                    for fichero in ficheros:
+                        #print(fechaUnida + "//////" + fichero.name)
+                        if fichero.is_file():
+                            if fechaUnida in fichero.name:
+                                cont = cont + 1
+                                newDir = str(dir2) + "\\" + numero
+                                try:
+                                    os.stat(newDir)
+                                except:
+                                    os.mkdir(newDir)
+                                newDir = str(dir2) + "\\" + numero + "\\" + fechaUnida
+                                try:
+                                    os.stat(newDir)
+                                    if cont <= 1:
+                                        print(
+                                            "*********************** DIRECCTORIO EXISTE: " + newDir)
+                                except:
+                                    os.mkdir(newDir)
+                                    if cont <= 1:
+                                        print(
+                                            "*********************** DIRECCTORIO CREADO: " + newDir)
+                                shutil.copy(fichero.path, newDir)
+                print("*********************** ARCHIVOS ENCONTRADOS: " + str(cont))
+
 os.system("cls")
 linea()
-busqueda,config = cargarArhivos()
+busqueda, config = cargarArhivos()
 while not salir:
     linea()
     print("*           MENU PRINCIPAL:")
@@ -200,7 +335,8 @@ while not salir:
         dirBusqueda = seleccionarDirectorios(config)
         BuscaNum(dirBusqueda, config, busqueda)
     elif opcion == 2:
-        print("Opcion 2")
+        dirBusqueda = seleccionarDirectorios(config)
+        BuscaNumFecha(dirBusqueda, config, busqueda)
     elif opcion == 3:
         addModDirectorio(config)
     elif opcion == 0:
@@ -209,3 +345,4 @@ while not salir:
         print("* Introduce una opcion valida")
         os.system("pause")
         os.system("cls")
+
